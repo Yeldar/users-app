@@ -1,22 +1,49 @@
-services:
-  users-read-db:
-    image: postgres:17-alpine
-    environment:
-      POSTGRES_DB: users-read-db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./init-scripts/users-read-db/init.sql:/docker-entrypoint-initdb.d/init.sql
+version: '3.8'
 
-  users-write-db:
-    image: postgres:17-alpine
-    environment:
-      POSTGRES_DB: users-write-db
-      POSTGRES_USER: postgres  # Default, can be omitted if unchanged
-      POSTGRES_PASSWORD: postgres
+services:
+  postgresql-master:
+    image: docker.io/bitnami/postgresql:latest
     ports:
-      - "5433:5432"
+      - '5432:5432'
     volumes:
-      - ./init-scripts/users-write-db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - 'postgresql_master_data:/bitnami/postgresql'
+    environment:
+      - POSTGRESQL_REPLICATION_MODE=master
+      - POSTGRESQL_REPLICATION_USER=repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=repl_password
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=postgres
+      - POSTGRESQL_DATABASE=usersdb
+      - ALLOW_EMPTY_PASSWORD=no # Set to 'yes' for development only
+    networks:
+      - app-tier
+
+  postgresql-slave:
+    image: docker.io/bitnami/postgresql:latest
+    ports:
+      - '5433:5432' # Map to a different host port to avoid conflict
+    volumes:
+      - 'postgresql_slave_data:/bitnami/postgresql'
+    environment:
+      - POSTGRESQL_REPLICATION_MODE=slave
+      - POSTGRESQL_REPLICATION_USER=repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=repl_password
+      - POSTGRESQL_MASTER_HOST=postgresql-master
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=postgres
+      - POSTGRESQL_DATABASE=usersdb
+      - ALLOW_EMPTY_PASSWORD=no
+    depends_on:
+      - postgresql-master
+    networks:
+      - app-tier
+
+volumes:
+  postgresql_master_data:
+    driver: local
+  postgresql_slave_data:
+    driver: local
+
+networks:
+  app-tier:
+    driver: bridge
