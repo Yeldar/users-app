@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: users-events-handle-service
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: "${USERS_READ_DATASOURCE_URL:jdbc:postgresql://users-read-db:5432/users-read-db}"
+    username: "${USERS_READ_DATASOURCE_USER:postgres}"
+    password: "${USERS_READ_DATASOURCE_PWD:postgres}"
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

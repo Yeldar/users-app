@@ -1,0 +1,18 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: users-write-service
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: "${USERS_WRITE_DATASOURCE_URL:jdbc:postgresql://users-write-db:5432/users-write-db}"
+    username: "${USERS_WRITE_DATASOURCE_USER:postgres}"
+    password: "${USERS_WRITE_DATASOURCE_PWD:postgres}"
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
