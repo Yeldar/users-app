@@ -6,7 +6,7 @@ spring:
     name: users-read-service
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: "${USERS_READ_DATASOURCE_URL:jdbc:postgresql://users-read-db:5432/users-read-db}"
+    url: "${USERS_READ_DATASOURCE_URL:jdbc:postgresql://localhost:5432/users-read-db}"
     username: "${USERS_READ_DATASOURCE_USER:postgres}"
     password: "${USERS_READ_DATASOURCE_PWD:postgres}"
     driver-class-name: org.postgresql.Driver

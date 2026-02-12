@@ -1,13 +1,15 @@
-package com.epam.nuralin.yeldar.events_service.service;
+package com.epam.nuralin.yeldar.read_service.service;
 
-import com.epam.nuralin.yeldar.events_service.dto.UserDto;
-import com.epam.nuralin.yeldar.events_service.exception.NotFoundException;
-import com.epam.nuralin.yeldar.events_service.map.UserMapper;
-import com.epam.nuralin.yeldar.events_service.repository.UserRepository;
+import com.epam.nuralin.yeldar.read_service.dto.UserDto;
+import com.epam.nuralin.yeldar.read_service.exception.NotFoundException;
+import com.epam.nuralin.yeldar.read_service.map.UserMapper;
+import com.epam.nuralin.yeldar.read_service.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Service
 @RequiredArgsConstructor
@@ -25,14 +27,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserDto> findByUsernameStartWith(String username, Pageable pageable) {
-        return userRepository
-            .findByUsernameStartWith(username, pageable)
-            .map(userMapper::toDto);
-    }
-
-    @Override
-    public Page<UserDto> findAll(Pageable pageable) {
+    public Page<UserDto> findAll(String username, Pageable pageable) {
+        if (isNotBlank(username)) {
+            return userRepository
+                .findByUsernameStartingWith(username, pageable)
+                .map(userMapper::toDto);
+        }
         return userRepository
             .findAll(pageable)
             .map(userMapper::toDto);

@@ -1,13 +1,13 @@
-package com.epam.nuralin.yeldar.events_service;
+package com.epam.nuralin.yeldar.write_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UsersReadServiceApplication {
+public class UsersWriteServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UsersReadServiceApplication.class, args);
+		SpringApplication.run(UsersWriteServiceApplication.class, args);
 	}
 
 }

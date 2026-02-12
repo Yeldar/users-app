@@ -1,4 +1,4 @@
-package com.epam.nuralin.yeldar.events_service;
+package com.epam.nuralin.yeldar.read_service;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,0 +1,22 @@
+services:
+  users-read-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: users-read-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init-scripts/users-read-db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  users-write-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: users-write-db
+      POSTGRES_USER: postgres  # Default, can be omitted if unchanged
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./init-scripts/users-write-db/init.sql:/docker-entrypoint-initdb.d/init.sql

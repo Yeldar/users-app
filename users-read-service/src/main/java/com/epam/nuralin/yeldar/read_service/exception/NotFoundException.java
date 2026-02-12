@@ -1,4 +1,4 @@
-package com.epam.nuralin.yeldar.events_service.exception;
+package com.epam.nuralin.yeldar.read_service.exception;
 
 public class NotFoundException extends RuntimeException {
 

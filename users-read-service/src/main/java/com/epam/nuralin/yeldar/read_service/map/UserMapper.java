@@ -1,7 +1,7 @@
-package com.epam.nuralin.yeldar.events_service.map;
+package com.epam.nuralin.yeldar.read_service.map;
 
-import com.epam.nuralin.yeldar.events_service.dto.UserDto;
-import com.epam.nuralin.yeldar.events_service.entity.UserEntity;
+import com.epam.nuralin.yeldar.read_service.dto.UserDto;
+import com.epam.nuralin.yeldar.read_service.entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 

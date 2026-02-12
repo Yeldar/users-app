@@ -1,4 +1,4 @@
-package com.epam.nuralin.yeldar.events_service.entity;
+package com.epam.nuralin.yeldar.read_service.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

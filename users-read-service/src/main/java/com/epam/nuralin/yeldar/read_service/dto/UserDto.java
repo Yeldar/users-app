@@ -1,4 +1,4 @@
-package com.epam.nuralin.yeldar.events_service.dto;
+package com.epam.nuralin.yeldar.read_service.dto;
 
 import java.time.OffsetDateTime;
 
@@ -6,7 +6,7 @@ public record UserDto(
     Long id,
     String username,
     String fullName,
-    boolean isActive,
+    boolean active,
     OffsetDateTime created,
     OffsetDateTime updated
 ) {
