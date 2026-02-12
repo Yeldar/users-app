@@ -1,10 +1,11 @@
-package com.epam.nuralin.yeldar.read_service.entity;
+package com.epam.nuralin.yeldar.write_service.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +21,8 @@ import java.time.OffsetDateTime;
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
+    @SequenceGenerator(name = "users_seq", sequenceName = "users_seq", initialValue = 1, allocationSize = 1)
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -28,6 +30,9 @@ public class UserEntity {
 
     @Column(nullable = false)
     String fullName;
+
+    @Column(nullable = false)
+    byte[] passwordHash;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
