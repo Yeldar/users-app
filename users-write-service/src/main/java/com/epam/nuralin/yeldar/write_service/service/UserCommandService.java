@@ -4,14 +4,18 @@ import com.epam.nuralin.yeldar.write_service.dto.ChangePasswordRequestDto;
 import com.epam.nuralin.yeldar.write_service.dto.CreateUserRequestDto;
 import com.epam.nuralin.yeldar.write_service.dto.UpdateUserRequestDto;
 import com.epam.nuralin.yeldar.write_service.dto.UpdateUserResponseDto;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.validation.annotation.Validated;
 
+@Validated
 public interface UserCommandService {
 
-    Long create(CreateUserRequestDto dto);
+    Long create(@Valid CreateUserRequestDto dto);
 
-    UpdateUserResponseDto update(Long id, UpdateUserRequestDto dto);
+    UpdateUserResponseDto update(@NotNull Long id, @Valid UpdateUserRequestDto dto);
 
-    void delete(Long id);
+    void delete(@NotNull Long id);
 
-    void changePassword(Long id, ChangePasswordRequestDto dto);
+    void changePassword(@NotNull Long id, @Valid ChangePasswordRequestDto dto);
 }

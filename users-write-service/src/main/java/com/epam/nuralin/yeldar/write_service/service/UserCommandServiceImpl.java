@@ -28,7 +28,7 @@ public class UserCommandServiceImpl implements UserCommandService {
 
     @Transactional
     @Override
-    public Long create(@Valid CreateUserRequestDto dto) {
+    public Long create(CreateUserRequestDto dto) {
         if (userRepository.existsByUsername(dto.getUsername())) {
             throw new AlreadyExistException("User with provided username already exists");
         }
@@ -49,7 +49,7 @@ public class UserCommandServiceImpl implements UserCommandService {
 
     @Transactional
     @Override
-    public void delete(@NotNull Long id) {
+    public void delete(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("Id cannot be null");
         }
@@ -60,7 +60,7 @@ public class UserCommandServiceImpl implements UserCommandService {
 
     @Transactional
     @Override
-    public void changePassword(@NotNull Long id, @Valid ChangePasswordRequestDto dto) {
+    public void changePassword(Long id, ChangePasswordRequestDto dto) {
         if (id == null) {
             throw new IllegalArgumentException("Id cannot be null");
         }
