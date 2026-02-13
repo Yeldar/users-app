@@ -12,7 +12,6 @@
     <modules>
         <module>users-read-service</module>
         <module>users-write-service</module>
-        <module>users-events-handle-service</module>
     </modules>
 
 </project>
