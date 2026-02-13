@@ -21,12 +21,12 @@ import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class UserCommandServiceImpl implements UserCommandService {
 
     private final UserRepository userRepository;
     private final UsersMapper usersMapper;
 
+    @Transactional
     @Override
     public Long create(@Valid CreateUserRequestDto dto) {
         if (userRepository.existsByUsername(dto.getUsername())) {
@@ -37,6 +37,7 @@ public class UserCommandServiceImpl implements UserCommandService {
         return entity.getId();
     }
 
+    @Transactional
     @Override
     public UpdateUserResponseDto update(@NotNull Long id, @Valid UpdateUserRequestDto dto) {
         UserEntity entity = userRepository.findById(id)
@@ -46,6 +47,7 @@ public class UserCommandServiceImpl implements UserCommandService {
         return usersMapper.toUpdateUserResponseDto(entity);
     }
 
+    @Transactional
     @Override
     public void delete(@NotNull Long id) {
         if (id == null) {
@@ -56,6 +58,7 @@ public class UserCommandServiceImpl implements UserCommandService {
         userRepository.delete(entity);
     }
 
+    @Transactional
     @Override
     public void changePassword(@NotNull Long id, @Valid ChangePasswordRequestDto dto) {
         if (id == null) {
