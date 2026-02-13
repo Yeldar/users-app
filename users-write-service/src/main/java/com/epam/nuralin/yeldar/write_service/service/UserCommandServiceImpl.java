@@ -10,6 +10,8 @@ import com.epam.nuralin.yeldar.write_service.exception.NotFoundException;
 import com.epam.nuralin.yeldar.write_service.mapper.UsersMapper;
 import com.epam.nuralin.yeldar.write_service.repository.UserRepository;
 import com.epam.nuralin.yeldar.write_service.util.HashUtils;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +28,8 @@ public class UserCommandServiceImpl implements UserCommandService {
     private final UsersMapper usersMapper;
 
     @Override
-    public Long create(CreateUserRequestDto dto) {
-        if (userRepository.existsByUsername(dto.username())) {
+    public Long create(@Valid CreateUserRequestDto dto) {
+        if (userRepository.existsByUsername(dto.getUsername())) {
             throw new AlreadyExistException("User with provided username already exists");
         }
         UserEntity entity = usersMapper.fromCreateUserRequestDto(dto);
@@ -36,7 +38,7 @@ public class UserCommandServiceImpl implements UserCommandService {
     }
 
     @Override
-    public UpdateUserResponseDto update(Long id, UpdateUserRequestDto dto) {
+    public UpdateUserResponseDto update(@NotNull Long id, @Valid UpdateUserRequestDto dto) {
         UserEntity entity = userRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("User with provided id not found"));
         entity.setFullName(dto.fullName());
@@ -45,7 +47,7 @@ public class UserCommandServiceImpl implements UserCommandService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(@NotNull Long id) {
         if (id == null) {
             throw new IllegalArgumentException("Id cannot be null");
         }
@@ -55,7 +57,7 @@ public class UserCommandServiceImpl implements UserCommandService {
     }
 
     @Override
-    public void changePassword(Long id, ChangePasswordRequestDto dto) {
+    public void changePassword(@NotNull Long id, @Valid ChangePasswordRequestDto dto) {
         if (id == null) {
             throw new IllegalArgumentException("Id cannot be null");
         }
